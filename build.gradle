@@ -1,0 +1,76 @@
+plugins {
+	id 'org.springframework.boot' version '2.2.2.BUILD-SNAPSHOT'
+	id 'io.spring.dependency-management' version '1.0.8.RELEASE'
+	id 'java'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '8'
+
+repositories {
+	jcenter()
+	mavenCentral()
+	maven { url 'https://repo.spring.io/milestone' }
+	maven { url 'https://repo.spring.io/snapshot' }
+}
+
+ext {
+	set('springCloudVersion', "Hoxton.BUILD-SNAPSHOT")
+}
+
+dependencies {
+<<<<<<< HEAD
+	// https://mvnrepository.com/artifact/org.hibernate/hibernate-core
+	compile group: 'org.hibernate', name: 'hibernate-core', version: '5.4.10.Final'
+=======
+
+// https://mvnrepository.com/artifact/io.micrometer/micrometer-registry-prometheus
+	compile group: 'io.micrometer', name: 'micrometer-registry-prometheus', version: '0.12.0.RELEASE'
+
+	// https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-hystrix
+	compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-hystrix', version: '1.0.0.RELEASE'
+
+	// https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-config-client
+	compile group: 'org.springframework.cloud', name: 'spring-cloud-config-client', version: '2.2.0.RELEASE'
+
+>>>>>>> 441abc9d7bc6055a1a160cb12d8a2b0ab2d12640
+
+// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '2.2.2.RELEASE'
+
+	//actuators
+	compile("org.springframework.boot:spring-boot-starter-actuator")
+	// https://mvnrepository.com/artifact/mysql/mysql-connector-java
+	compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.18'
+
+	// https://mvnrepository.com/artifact/org.springframework.retry/spring-retry
+	compile group: 'org.springframework.retry', name: 'spring-retry', version: '1.2.4.RELEASE'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	compile "io.springfox:springfox-swagger2:2.9.2"
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+	compile group: 'org.modelmapper', name: 'modelmapper', version: '2.3.5'
+	compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
+
+
+
+
+
+	compile group: 'org.mockito', name: 'mockito-core', version: '2.13.0'
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+
+
+
+}
+
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+	}
+}
+
+test {
+	useJUnitPlatform()
+}

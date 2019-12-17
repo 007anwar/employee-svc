@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: employee-svc
+  cloud:
+    config:
+      uri: http://localhost:8888
+      username: admin
+      password: nihilent
+      enabled: true
+      fail-fast: true
+      retry:
+        max-interval: 1000
+        max-attempts: 10
+<<<<<<< HEAD
+=======
+management:
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+>>>>>>> 441abc9d7bc6055a1a160cb12d8a2b0ab2d12640
