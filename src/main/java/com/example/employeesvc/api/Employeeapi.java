@@ -4,26 +4,19 @@ package com.example.employeesvc.api;
 import com.example.employeesvc.dto.EmployeeDto;
 import com.example.employeesvc.entity.Employee;
 import com.example.employeesvc.service.EmployeeService;
-import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.logging.Logger;
 @Api(description = "Set of endpoints for Creating, Retrieving, Updating and Deleting of Persons.")
 @RestController()
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/employee")
 public class Employeeapi {
     Logger logger= Logger.getLogger(Employeeapi.class.getName());
@@ -56,15 +49,15 @@ public class Employeeapi {
     }
 
     @ApiOperation("Return all employee")
-    @GetMapping()
-    public ResponseEntity<Iterable<Employee>> getAllEmployee() {
-        Iterable<Employee> allEmployee = employeeService.getAll();
+    @GetMapping(path="/all/{pageNo}")
+    public ResponseEntity<Iterable<Employee>> getAllEmployee(@PathVariable final String pageNo) {
+        Iterable<Employee> allEmployee = employeeService.getAll(pageNo);
         return new ResponseEntity<>(allEmployee, HttpStatus.OK);
     }
 
     @ApiOperation("update user by id")
     @PutMapping
-    public ResponseEntity<String> update(@ApiParam("Pass employee object") EmployeeDto employeeDto) {
+    public ResponseEntity<String> update(@ApiParam("Pass employee object") @RequestBody final EmployeeDto employeeDto) throws InterruptedException {
         if (employeeDto.getId() == null) {
             return new ResponseEntity<>("Please specify id", HttpStatus.BAD_REQUEST);
         }
