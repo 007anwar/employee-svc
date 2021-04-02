@@ -1,9 +1,9 @@
-package com.example.employeesvc;
+package com.example.EMPLOYEESVC;
 
-import com.example.employeesvc.dto.EmployeeDto;
-import com.example.employeesvc.entity.Employee;
-import com.example.employeesvc.repo.EmployeeRepository;
-import com.example.employeesvc.service.EmployeeService;
+import com.example.EMPLOYEESVC.dto.EmployeeDto;
+import com.example.EMPLOYEESVC.entity.Employee;
+import com.example.EMPLOYEESVC.repo.EmployeeRepository;
+import com.example.EMPLOYEESVC.service.EmployeeService;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -24,14 +24,15 @@ public class TestService {
     EmployeeRepository repo;
     @Mock
     Employee employee;
+    @InjectMocks
+    EmployeeDto dto;
+    @InjectMocks
+    Employee emp;
     @Mock
     Iterable<Employee> allemp;
     @InjectMocks
     EmployeeService service;
-    @InjectMocks
-    EmployeeDto dto;//null init
-    @InjectMocks
-    Employee emp;//null init
+
     @Test
     public void testCreateEmployeeService()
     {
@@ -40,6 +41,7 @@ public class TestService {
         Mockito.when(repo.save(employee)).thenReturn(employee);
         Employee result = service.createEmployee(dto);
         Assert.assertEquals(employee,result);
+        Mockito.verify(repo).save(employee);
     }
 
     @Test
@@ -50,16 +52,7 @@ public class TestService {
         Mockito.when(repo.findById(1l)).thenReturn(e);
         Employee employee = service.getEmployee("1");
         Assert.assertEquals(employee1,employee);
-    }
-
-    @Test
-    public void testGetAllEmployee()
-    {
-        Mockito.when(repo.findAll()).thenReturn(allemp);
-        Iterable<Employee> all = repo.findAll();
-        Iterable<Employee> actualallemp = service.getAll();
-        Assert.assertEquals(actualallemp,all);
-
+        Mockito.verify(repo).findById(1l);
     }
 
     @Test
@@ -69,6 +62,17 @@ public class TestService {
         Mockito.when(repo.findById(1l)).thenReturn(e);
         int delete = service.delete(1l);
         Assert.assertEquals(1,delete);
+        Mockito.verify(repo).findById(1l);
+    }
+
+    @Test
+    public void testGetAllEmployee()
+    {
+        Mockito.when(repo.findAll()).thenReturn(allemp);
+        Iterable<Employee> all = repo.findAll();
+        Iterable<Employee> actualallemp = service.getAll();
+        Assert.assertEquals(actualallemp,all);
+        Mockito.verify(repo,Mockito.times(2)).findAll();
     }
     @Test
     public void testUpdateEmployee()
