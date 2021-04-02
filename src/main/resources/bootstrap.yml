@@ -1,9 +1,11 @@
 spring:
+  datasource:
+    password: everywhere_duck_happened_oh_no
   application:
     name: employee-svc
   cloud:
     config:
-      uri: http://localhost:8888
+      uri: http://localhost:8887
       username: admin
       password: nihilent
       enabled: true
