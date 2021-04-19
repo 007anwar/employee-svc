@@ -5,3 +5,4 @@ new line
 another line
 firrst feature
 second feature
+new feature
