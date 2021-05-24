@@ -2,6 +2,8 @@ plugins {
 	id 'org.springframework.boot' version '2.2.4.BUILD-SNAPSHOT'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
+	id 'com.palantir.docker' version '0.22.1'
+	id 'com.diffplug.gradle.spotless' version '3.24.0'
 }
 
 group = 'com.example'
@@ -19,6 +21,19 @@ ext {
 	set('springCloudVersion', "Hoxton.BUILD-SNAPSHOT")
 }
 
+docker.dependsOn build
+docker {
+	name "employee-svc:${project.version}"
+	tags "latest"
+	if( project.version.endsWith('-SNAPSHOT')) {
+		docker.tags "latest-snapshot"
+	} else {
+		docker.tags "latest"
+	}
+	dockerfile file('Dockerfile')
+	files bootJar,'src/main/resources/bootstrap.yaml', 'build/resources/main/logback-spring.xml'
+	buildArgs(['JAR_FILE': "${bootJar.archiveName}"])
+}
 dependencies {
 
 	// https://mvnrepository.com/artifact/org.hibernate/hibernate-core
