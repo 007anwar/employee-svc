@@ -1,6 +1,6 @@
 spring:
   datasource:
-    password: everywhere_duck_happened_oh_no
+    password: password
   application:
     name: employee-svc
   cloud:
